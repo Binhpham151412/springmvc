@@ -44,7 +44,7 @@ public class ProductController {
                                 @RequestParam(value = "newCreateDate") String dateProduct,
                                 @RequestParam(value = "newBrand") int brandId,
                                 @RequestParam(value = "id") int id) {
-        productDAO.updateProduct(ProductModel.builder().build().builder().build().builder()
+        productDAO.updateProduct(ProductModel.builder()
                                              .id(id)
                                              .brandModel(BrandModel.builder()
                                                                    .id(brandId)
