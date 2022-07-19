@@ -16,4 +16,5 @@ public class ProductModel {
     private String nameProduct;
     private BrandModel brandModel;
     private String createDate;
+    private String image;
 }

@@ -1,7 +1,6 @@
 package com.springmvc.testmvc.dao;
 
 import com.springmvc.testmvc.mapper.ListProductMapper;
-import com.springmvc.testmvc.mapper.ProductMapper;
 import com.springmvc.testmvc.model.ProductModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,7 +22,7 @@ public class ProductDAO {
             + "from product "
             + " inner join brand on product.brand_id = brand.id ";
         return jdbcTemplate.query(sql, new ListProductMapper());
-    }//Binh pham
+    }
 
     public ProductModel findById(int id) {
         String sql = "select product.id as pid, product.nameProduct as pname, brand.nameBrand as bname,"
