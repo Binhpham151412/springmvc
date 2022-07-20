@@ -15,4 +15,6 @@ public class WebAppConfig
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/template/**").addResourceLocations("/template/");
     }
+
+
 }

@@ -74,12 +74,13 @@ public class ProductController {
                                  @RequestParam(value = "brand_id") int idProduct,
                                  @RequestParam(value = "image") MultipartFile multipartFile,
                                  HttpServletRequest request) {
-        if (!(multipartFile.isEmpty())) {
-            String fileName = multipartFile.getOriginalFilename();
-            String getFile = productDAO.getFileNameServer(fileName);
-            File fileRoot = productDAO.pathFile(getFile, "template/img", request);
+        String getFile = null;
+        if (!(multipartFile.isEmpty())) { // check thử có tải file lên ko?
+            String fileName = multipartFile.getOriginalFilename(); // lấy lại tên gôcs của file
+            getFile = productDAO.getFileNameServer(fileName); // đặt lại c ái tên
+            File fileRoot = productDAO.pathFile(getFile, "template/img", request); // tạo đường dẫn để lưu file
             try {
-                multipartFile.transferTo(fileRoot);
+                multipartFile.transferTo(fileRoot); // cho phép lưu ảnh dô server
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -88,7 +89,7 @@ public class ProductController {
                                           .nameProduct(nameProduct)
                                           .brandModel(BrandModel.builder().id(idProduct).build())
                                           .createDate(dateProduct)
-                                          .image(String.valueOf(multipartFile))
+                                          .image(getFile)
                                           .build());
         return "redirect:/product/list";
     }

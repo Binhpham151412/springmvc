@@ -20,6 +20,7 @@ public class ListProductMapper
                                                  .nameBrand(rs.getString("bname"))
                                                  .build())
                            .createDate(rs.getString("createdate"))
+                           .image(rs.getString("image"))
                            .build();
     }
 }

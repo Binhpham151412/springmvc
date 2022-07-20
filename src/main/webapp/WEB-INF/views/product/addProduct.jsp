@@ -13,7 +13,7 @@
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/product/add" method="post" enctype="multipart/form-data">
-    <lable>name:</lable>
+    <lable>nameProduct:</lable>
     <input type="text" name="name"><br>
     <lable>createDate:</lable>
     <input type="date" name="date"><br>

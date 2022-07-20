@@ -23,7 +23,7 @@ public class ProductDAO {
     private JdbcTemplate jdbcTemplate;
 
     public List<ProductModel> findAll() {
-        String sql = "select product.id as pid, product.nameProduct as pname, brand.nameBrand as bname"
+        String sql = "select product.id as pid,product.image, product.nameProduct as pname, brand.nameBrand as bname"
             + ", brand.id as bid, product.createdate "
             + "from product "
             + " inner join brand on product.brand_id = brand.id ";
@@ -54,7 +54,7 @@ public class ProductDAO {
     }
 
     public String getFileNameServer(String fileName) {
-        String nameFile = null;
+        String nameFile;
         if (!StringUtils.isNullOrEmpty(fileName)) {
             String extension = FilenameUtils.getExtension(fileName);
             String baseName = FilenameUtils.getBaseName(fileName);
@@ -65,17 +65,16 @@ public class ProductDAO {
 //            builder.append(baseName).append("_").append(System.nanoTime()).append(".").append(extension);
 //            return builder.toString();
         }
-        return nameFile;
+        return null;
     }
-
+//
     public File pathFile(String fileName, String folder, HttpServletRequest request) {
         String rootPath = request.getServletContext().getRealPath(""); // trả về đường dẫn tuyệt đối của web (target)
         File diary = new File(rootPath + folder); // đường dẫn folder
-        if (diary.exists()) {
+        if (!diary.exists()) {
             diary.mkdirs();
         }
-        File file = new File(rootPath + folder + "/" + fileName);
-        return file;
+        return new File(rootPath + folder + "/" + fileName);
     }
 
 }
