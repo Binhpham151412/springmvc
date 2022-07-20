@@ -17,7 +17,7 @@
 <%
     ProductModel productModel = (ProductModel) request.getAttribute("findOneProduct");
 %>
-<form action="${pageContext.request.contextPath}/product/update?id=<%=productModel.getId()%>"method="post">
+<form action="${pageContext.request.contextPath}/product/update?id=<%=productModel.getId()%>"method="post" enctype="multipart/form-data">
     <lable>name:</lable>
     <input type="text" value="<%=productModel.getNameProduct()%>" name="newName"><br>
     <lable>createDate:</lable>
@@ -38,6 +38,7 @@
             }
         %>
     </select>
+    <input type="file" name="image" multiple = multiple>
     <br>
     <input type="submit">
 </form>

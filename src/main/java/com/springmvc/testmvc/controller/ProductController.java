@@ -5,7 +5,6 @@ import com.springmvc.testmvc.dao.ProductDAO;
 import com.springmvc.testmvc.model.BrandModel;
 import com.springmvc.testmvc.model.ProductModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,13 +49,27 @@ public class ProductController {
     public String updateProduct(@RequestParam(value = "newName") String nameProduct,
                                 @RequestParam(value = "newCreateDate") String dateProduct,
                                 @RequestParam(value = "newBrand") int brandId,
-                                @RequestParam(value = "id") int id) {
+                                @RequestParam(value = "id") int id,
+                                @RequestParam(value = "image") MultipartFile multipartFile,
+                                HttpServletRequest request) {
+        String getFileName = null;
+        if (!(multipartFile.isEmpty())) { // check thử có tải file lên ko?
+            String fileName = multipartFile.getOriginalFilename(); // lấy lại tên gốc của file
+            getFileName = productDAO.getFileNameServer(fileName); // đặt lại c ái tên
+            File fileRoot = productDAO.pathFile(getFileName, "template/img", request); // tạo đường dẫn để lưu file
+            try {
+                multipartFile.transferTo(fileRoot); // cho phép lưu ảnh dô server
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         productDAO.updateProduct(ProductModel.builder()
                                              .id(id)
                                              .brandModel(BrandModel.builder()
                                                                    .id(brandId)
                                                                    .build())
                                              .createDate(dateProduct)
+                                             .image(getFileName)
                                              .nameProduct(nameProduct)
                                              .build());
         return "redirect:/product/list";
@@ -76,7 +89,7 @@ public class ProductController {
                                  HttpServletRequest request) {
         String getFile = null;
         if (!(multipartFile.isEmpty())) { // check thử có tải file lên ko?
-            String fileName = multipartFile.getOriginalFilename(); // lấy lại tên gôcs của file
+            String fileName = multipartFile.getOriginalFilename(); // lấy lại tên gốc của file
             getFile = productDAO.getFileNameServer(fileName); // đặt lại c ái tên
             File fileRoot = productDAO.pathFile(getFile, "template/img", request); // tạo đường dẫn để lưu file
             try {

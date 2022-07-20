@@ -31,7 +31,7 @@ public class ProductDAO {
     }
 
     public ProductModel findById(int id) {
-        String sql = "select product.id as pid, product.nameProduct as pname, brand.nameBrand as bname,"
+        String sql = "select product.id as pid,product.image, product.nameProduct as pname, brand.nameBrand as bname,"
             + " brand.id as bid, product.createdate "
             + " from product "
             + " inner join brand on product.brand_id = brand.id "
@@ -48,9 +48,9 @@ public class ProductDAO {
     }
 
     public void updateProduct(ProductModel productModel) {
-        String sql = "update product set nameProduct = ?, createdate = ?, brand_id = ? where id = ? ";
+        String sql = "update product set nameProduct = ?, createdate = ?, brand_id = ?, image = ? where id = ? ";
         jdbcTemplate.update(sql, productModel.getNameProduct(), productModel.getCreateDate(),
-                            productModel.getBrandModel().getId(), productModel.getId());
+                            productModel.getBrandModel().getId(),productModel.getImage(), productModel.getId());
     }
 
     public String getFileNameServer(String fileName) {
