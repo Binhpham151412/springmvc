@@ -1,12 +1,18 @@
 package com.springmvc.testmvc.dao;
 
+import com.mysql.cj.util.StringUtils;
 import com.springmvc.testmvc.mapper.ListProductMapper;
 import com.springmvc.testmvc.model.ProductModel;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+
+import java.io.File;
 import java.util.List;
 
 @Repository
@@ -34,9 +40,11 @@ public class ProductDAO {
     }
 
     public void addProduct(ProductModel productModel) {
-        String sql = "insert into product (nameProduct, createdate, brand_id) values (?,?,?)";
-        jdbcTemplate.update(sql, productModel.getNameProduct(), productModel.getCreateDate(), productModel.getBrandModel()
-                                                                                                          .getId());
+        String sql = "insert into product (nameProduct, createdate, brand_id, image) values (?,?,?,?)";
+        jdbcTemplate.update(sql, productModel.getNameProduct(),
+                            productModel.getCreateDate(),
+                            productModel.getBrandModel().getId(),
+                            productModel.getImage());
     }
 
     public void updateProduct(ProductModel productModel) {
@@ -45,5 +53,29 @@ public class ProductDAO {
                             productModel.getBrandModel().getId(), productModel.getId());
     }
 
+    public String getFileNameServer(String fileName) {
+        String nameFile = null;
+        if (!StringUtils.isNullOrEmpty(fileName)) {
+            String extension = FilenameUtils.getExtension(fileName);
+            String baseName = FilenameUtils.getBaseName(fileName);
+            nameFile = baseName + "-" + System.nanoTime() + extension;
+            return nameFile;
+
+//            StringBuilder builder = new StringBuilder();
+//            builder.append(baseName).append("_").append(System.nanoTime()).append(".").append(extension);
+//            return builder.toString();
+        }
+        return nameFile;
+    }
+
+    public File pathFile(String fileName, String folder, HttpServletRequest request) {
+        String rootPath = request.getServletContext().getRealPath(""); // trả về đường dẫn tuyệt đối của web (target)
+        File diary = new File(rootPath + folder); // đường dẫn folder
+        if (diary.exists()) {
+            diary.mkdirs();
+        }
+        File file = new File(rootPath + folder + "/" + fileName);
+        return file;
+    }
 
 }

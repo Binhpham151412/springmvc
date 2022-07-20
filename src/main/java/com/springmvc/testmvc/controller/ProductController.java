@@ -5,13 +5,20 @@ import com.springmvc.testmvc.dao.ProductDAO;
 import com.springmvc.testmvc.model.BrandModel;
 import com.springmvc.testmvc.model.ProductModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+
+import java.io.File;
+import java.io.IOException;
 
 @Controller
 public class ProductController {
@@ -64,14 +71,27 @@ public class ProductController {
     @PostMapping("/product/add")
     public String postAddProduct(@RequestParam(value = "name") String nameProduct,
                                  @RequestParam(value = "date") String dateProduct,
-                                 @RequestParam(value = "id", required = false) int id,
-                                 @RequestParam(value = "brand_id") int idProduct) {
+                                 @RequestParam(value = "brand_id") int idProduct,
+                                 @RequestParam(value = "image") MultipartFile multipartFile,
+                                 HttpServletRequest request) {
+        if (!(multipartFile.isEmpty())) {
+            String fileName = multipartFile.getOriginalFilename();
+            String getFile = productDAO.getFileNameServer(fileName);
+            File fileRoot = productDAO.pathFile(getFile, "template/img", request);
+            try {
+                multipartFile.transferTo(fileRoot);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         productDAO.addProduct(ProductModel.builder()
-                                          .id(id)
                                           .nameProduct(nameProduct)
                                           .brandModel(BrandModel.builder().id(idProduct).build())
                                           .createDate(dateProduct)
+                                          .image(String.valueOf(multipartFile))
                                           .build());
         return "redirect:/product/list";
     }
+
+
 }

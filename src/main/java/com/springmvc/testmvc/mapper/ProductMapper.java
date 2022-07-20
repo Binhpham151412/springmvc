@@ -19,6 +19,7 @@ public class ProductMapper
                                                  .id(rs.getInt("bid"))
                                                  .build())
                            .createDate(rs.getString("createdate"))
+                           .image(rs.getString("image"))
                            .build();
     }
 }

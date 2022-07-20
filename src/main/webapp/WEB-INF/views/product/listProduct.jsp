@@ -16,13 +16,14 @@
 <body>
 <table border="1">
     <tr>
-        <th colspan="6">LIST PRODUCT</th>
+        <th colspan="7">LIST PRODUCT</th>
     </tr>
     <tr>
         <th>id</th>
         <th>name</th>
         <th>brand_name</th>
         <th>createDate</th>
+        <th>image</th>
         <th>update</th>
         <th>delete</th>
     </tr>
@@ -37,6 +38,7 @@
         <td><%=item.getNameProduct()%></td>
         <td><%=item.getBrandModel().getNameBrand()%></td>
         <td><%=item.getCreateDate()%></td>
+        <td><%=item.getImage()%></td>
         <td><a href="<%=request.getContextPath()%>/product/update?id=<%=item.getId()%>">Update</a></td>
         <td><a href="<%=request.getContextPath()%>/product/delete?id=<%=item.getId()%>">Delete</a></td>
     </tr>
