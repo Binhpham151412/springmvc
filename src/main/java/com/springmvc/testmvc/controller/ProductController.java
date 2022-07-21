@@ -51,11 +51,11 @@ public class ProductController {
                                 @RequestParam(value = "newBrand") int brandId,
                                 @RequestParam(value = "id") int id,
                                 @RequestParam(value = "image") MultipartFile multipartFile,
-                                HttpServletRequest request) {
+                                HttpServletRequest request) { //request
         String getFileName = null;
         if (!(multipartFile.isEmpty())) { // check thử có tải file lên ko?
             String fileName = multipartFile.getOriginalFilename(); // lấy lại tên gốc của file
-            getFileName = productDAO.getFileNameServer(fileName); // đặt lại c ái tên
+            getFileName = productDAO.getFileNameServer(fileName); // đặt lại cái tên
             File fileRoot = productDAO.pathFile(getFileName, "template/img", request); // tạo đường dẫn để lưu file
             try {
                 multipartFile.transferTo(fileRoot); // cho phép lưu ảnh dô server
