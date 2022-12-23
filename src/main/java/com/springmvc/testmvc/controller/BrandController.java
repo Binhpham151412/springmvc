@@ -50,13 +50,13 @@ public class BrandController {
     }
 
     @GetMapping("/brand/edit/{id}")
-    public String getEditBrandId(@PathVariable int id, Model model) {
+    public String getEditBrandId(@PathVariable("id") int id, Model model) {
         model.addAttribute("findByBrand", brandDAO.findById(id));
         return "brand/editBrand";
     }
 
     @PostMapping("/brand/edit/{id}")
-    public String editBrand(@RequestParam(value = "nameBrand") String nameBrand, @PathVariable int id) {
+    public String editBrand(@RequestParam(value = "nameBrand") String nameBrand, @PathVariable("id") int id) {
         brandDAO.update(BrandModel.builder()
                                   .id(id)
                                   .nameBrand(nameBrand)

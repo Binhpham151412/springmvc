@@ -77,8 +77,7 @@ public class ProductController {
 
     @GetMapping("/product/add")
     public ModelAndView getAddProduct() {
-        ModelAndView modelAndView = new ModelAndView("product/addProduct");
-        return modelAndView;
+        return new ModelAndView("product/addProduct");
     }
 
     @PostMapping("/product/add")

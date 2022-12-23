@@ -5,13 +5,11 @@ import com.springmvc.testmvc.mapper.ListProductMapper;
 import com.springmvc.testmvc.model.ProductModel;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.io.File;
 import java.util.List;
 
@@ -19,7 +17,6 @@ import java.util.List;
 @Transactional
 public class ProductDAO {
     @Autowired
-
     private JdbcTemplate jdbcTemplate;
 
     public List<ProductModel> findAll() {
