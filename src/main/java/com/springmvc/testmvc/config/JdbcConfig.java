@@ -7,10 +7,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
+
 @Configuration
 public class JdbcConfig {
     @Bean("dataSource")
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(GlobalsConstants.DRIVER_NAME);
         dataSource.setUrl(GlobalsConstants.URL);
@@ -20,7 +21,7 @@ public class JdbcConfig {
     }
 
     @Bean("jdbcTemplate")
-    public JdbcTemplate jdbcTemplate(){ //abstractDao
+    public JdbcTemplate jdbcTemplate() { //abstractDao
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         jdbcTemplate.setDataSource(dataSource()); //DI
         return jdbcTemplate;

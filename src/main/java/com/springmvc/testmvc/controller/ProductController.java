@@ -64,14 +64,14 @@ public class ProductController {
             }
         }
         productDAO.updateProduct(ProductModel.builder()
-                                             .id(id)
-                                             .brandModel(BrandModel.builder()
-                                                                   .id(brandId)
-                                                                   .build())
-                                             .createDate(dateProduct)
-                                             .image(getFileName)
-                                             .nameProduct(nameProduct)
-                                             .build());
+                .id(id)
+                .brandModel(BrandModel.builder()
+                        .id(brandId)
+                        .build())
+                .createDate(dateProduct)
+                .image(getFileName)
+                .nameProduct(nameProduct)
+                .build());
         return "redirect:/product/list";
     }
 
@@ -98,11 +98,11 @@ public class ProductController {
             }
         }
         productDAO.addProduct(ProductModel.builder()
-                                          .nameProduct(nameProduct)
-                                          .brandModel(BrandModel.builder().id(idProduct).build())
-                                          .createDate(dateProduct)
-                                          .image(getFile)
-                                          .build());
+                .nameProduct(nameProduct)
+                .brandModel(BrandModel.builder().id(idProduct).build())
+                .createDate(dateProduct)
+                .image(getFile)
+                .build());
         return "redirect:/product/list";
     }
 

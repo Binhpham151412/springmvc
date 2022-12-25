@@ -21,33 +21,33 @@ public class ProductDAO {
 
     public List<ProductModel> findAll() {
         String sql = "select product.id as pid,product.image, product.nameProduct as pname, brand.nameBrand as bname"
-            + ", brand.id as bid, product.createdate "
-            + "from product "
-            + " inner join brand on product.brand_id = brand.id ";
+                + ", brand.id as bid, product.createdate "
+                + "from product "
+                + " inner join brand on product.brand_id = brand.id ";
         return jdbcTemplate.query(sql, new ListProductMapper());
     }
 
     public ProductModel findById(int id) {
         String sql = "select product.id as pid,product.image, product.nameProduct as pname, brand.nameBrand as bname,"
-            + " brand.id as bid, product.createdate "
-            + " from product "
-            + " inner join brand on product.brand_id = brand.id "
-            + " where product.id = ?";
+                + " brand.id as bid, product.createdate "
+                + " from product "
+                + " inner join brand on product.brand_id = brand.id "
+                + " where product.id = ?";
         return jdbcTemplate.queryForObject(sql, new ListProductMapper(), id);
     }
 
     public void addProduct(ProductModel productModel) {
         String sql = "insert into product (nameProduct, createdate, brand_id, image) values (?,?,?,?)";
         jdbcTemplate.update(sql, productModel.getNameProduct(),
-                            productModel.getCreateDate(),
-                            productModel.getBrandModel().getId(),
-                            productModel.getImage());
+                productModel.getCreateDate(),
+                productModel.getBrandModel().getId(),
+                productModel.getImage());
     }
 
     public void updateProduct(ProductModel productModel) {
         String sql = "update product set nameProduct = ?, createdate = ?, brand_id = ?, image = ? where id = ? ";
         jdbcTemplate.update(sql, productModel.getNameProduct(), productModel.getCreateDate(),
-                            productModel.getBrandModel().getId(),productModel.getImage(), productModel.getId());
+                productModel.getBrandModel().getId(), productModel.getImage(), productModel.getId());
     }
 
     public String getFileNameServer(String fileName) {
@@ -64,7 +64,8 @@ public class ProductDAO {
         }
         return null;
     }
-//
+
+    //
     public File pathFile(String fileName, String folder, HttpServletRequest request) {
         String rootPath = request.getServletContext().getRealPath(""); // trả về đường dẫn tuyệt đối của web (target)
         File diary = new File(rootPath + folder); // đường dẫn folder

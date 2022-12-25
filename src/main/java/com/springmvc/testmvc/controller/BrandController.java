@@ -40,8 +40,8 @@ public class BrandController {
     @PostMapping("/brand/add")
     public String postAddBrand(@RequestParam(value = "nameBrand") String name) {
         int check = brandDAO.addBrand(BrandModel.builder()
-                                                .nameBrand(name)
-                                                .build());
+                .nameBrand(name)
+                .build());
         if (check > 0) {
             return "redirect:/brand/list";
         } else {
@@ -58,9 +58,9 @@ public class BrandController {
     @PostMapping("/brand/edit/{id}")
     public String editBrand(@RequestParam(value = "nameBrand") String nameBrand, @PathVariable("id") int id) {
         brandDAO.update(BrandModel.builder()
-                                  .id(id)
-                                  .nameBrand(nameBrand)
-                                  .build());
+                .id(id)
+                .nameBrand(nameBrand)
+                .build());
         return "redirect:/brand/list";//-> chạy đến phương thức get của brang/list
         // sai: return "brand/listBrand" -> trả về giao diện. những mình khống truyền lên object-> thiếu object dòng 32
 
